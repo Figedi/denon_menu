@@ -1,6 +1,12 @@
 import { Menu } from 'electron';
 import menubar from 'menubar';
-import path from 'path';
+
+// importing globals to avoid requiring them in the renderer itself
+import DenonClient from 'denon_remote';
+import AutoLaunch from 'auto-launch';
+
+global.DenonClient = DenonClient;
+global.AutoLaunch = AutoLaunch;
 
 let app = null;
 let mb = null;
@@ -36,7 +42,7 @@ const installExtensions = async () => {
 };
 
 mb = menubar({
-  icon: path.resolve(__dirname, '../resources/icons/16x16.png'),
+  icon: `${__dirname}/icons/16x16.png`,
   index: `file://${__dirname}/app.html`,
   width: 200,
   height: 300,

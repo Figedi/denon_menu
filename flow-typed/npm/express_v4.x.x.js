@@ -1,7 +1,6 @@
-// flow-typed signature: 53b76c6024320737ff29a45fb413baa9
-// flow-typed version: 7334eae621/express_v4.x.x/flow_>=v0.28.x
+// flow-typed signature: c3abd38bbfc1fc2ef09318ae0b630774
+// flow-typed version: 622c2ee76d/express_v4.x.x/flow_>=v0.28.x
 
-// @flow
 import type { Server } from 'http';
 
 declare type express$RouterOptions = {

@@ -15,7 +15,7 @@
     "postinstall": "concurrently \"npm run flow-typed-install\" \"install-app-deps\" \"node node_modules/fbjs-scripts/node/check-dev-engines.js package.json\"",
     "dev": "npm run hot-server -- --start-hot",
     "package": "npm run build && build --publish never",
-    "package-all": "npm run build && build -mwl"
+    "package-all": "npm run build && build -m"
   },
   "build": {
     "appId": "de.figedi.DenonRemote",
@@ -37,6 +37,7 @@
     },
     "files": [
       "dist/",
+      "icons/",
       "node_modules/",
       "app.html",
       "main.js",
@@ -53,7 +54,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chentsulin/electron-react-boilerplate.git"
+    "url": "git+https://github.com/Figedi/denon_menu.git"
   },
   "author": {
     "name": "F. Kaminski",
@@ -62,7 +63,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chentsulin/electron-react-boilerplate/issues"
+    "url": "https://github.com/Figedi/denon_menu/issues"
   },
   "keywords": [
     "electron",
@@ -70,7 +71,7 @@
     "react",
     "menubar"
   ],
-  "homepage": "https://github.com/chentsulin/electron-react-boilerplate#readme",
+  "homepage": "https://github.com/Figedi/denon_menu#readme",
   "devDependencies": {
     "asar": "^0.12.3",
     "babel-core": "^6.21.0",

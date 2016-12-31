@@ -48,6 +48,9 @@ const config = validate(merge(baseConfig, {
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream' },
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
       { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' },
+    ],
+    noParse: [
+      new RegExp('node_modules/localforage/dist/localforage.js'),
     ]
   },
 

@@ -1,8 +1,7 @@
 // @flow
+import electron from 'electron';
 
-import { remote } from 'electron';
-
-const AutoLaunch = remote.require('auto-launch');
+const AutoLaunch = electron.remote.getGlobal('AutoLaunch');
 
 const denonLauncher = new AutoLaunch({
   name: 'Denon Remote',

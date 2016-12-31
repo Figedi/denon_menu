@@ -1,7 +1,7 @@
 // @flow
-import { remote } from 'electron';
+import electron from 'electron';
 
-const DenonClient = remote.require('denon_remote');
+const DenonClient = electron.remote.getGlobal('DenonClient');
 
 let instance = {};
 

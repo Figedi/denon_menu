@@ -1,6 +1,8 @@
 import { call, select, take, fork, put, cancel, cancelled, race, actionChannel } from 'redux-saga/effects';
 import { buffers, delay } from 'redux-saga';
 import { REHYDRATE } from 'redux-persist/constants';
+import { get } from 'lodash';
+
 import { denon as denonApi } from '../api';
 import { DENON_ACTIONS, actions } from '../actions/denon';
 import { promiseHelpers } from '../utils';
@@ -97,7 +99,9 @@ function* watchStart() {
 //
 function* watchRehydrate() {
   const action = yield take(REHYDRATE);
-  yield fork(rehydrate, action.payload.config.ip);
+  if (get(action, 'payload.config.ip')) {
+    yield fork(rehydrate, action.payload.config.ip);
+  }
 }
 
 export default function* root() {
