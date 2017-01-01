@@ -11,5 +11,6 @@
   },
   "license": "MIT",
   "dependencies": {
+    "denon_remote": "github:figedi/denon_remote"
   }
 }

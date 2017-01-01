@@ -130,7 +130,6 @@
   "dependencies": {
     "auto-launch": "^5.0.1",
     "classnames": "^2.2.5",
-    "denon_remote": "github:figedi/denon_remote",
     "electron-debug": "^1.0.1",
     "font-awesome": "^4.7.0",
     "localforage": "^1.4.3",
