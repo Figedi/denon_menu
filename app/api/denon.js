@@ -33,7 +33,7 @@ function exec(host: string, cmd: string) {
       if (error) {
         reject(error);
       } else {
-        resolve(rest.response);
+        resolve(rest);
       }
     });
   });
@@ -46,7 +46,10 @@ export function setVolume(host: string, amount: number) {
 
 export function getVolume(host: string) {
   return exec(host, 'MV?').then((response) => {
-    const volume = response[0].slice(2); // MV465 -> 46.5
+    if (response.code === 1) { // no response received
+      return response;
+    }
+    const volume = response.response[0].slice(2); // MV465 -> 46.5
     const volumeBits = `${volume}`.split('');
 
     let normalizedVolume = volume;
@@ -54,7 +57,7 @@ export function getVolume(host: string) {
       volumeBits.splice(2, 0, '.');
       normalizedVolume = parseFloat(volumeBits.join(''));
     }
-    return [normalizedVolume, ...response.slice(1)];
+    return { ...response, response: [normalizedVolume, ...response.response.slice(1)] };
   });
 }
 

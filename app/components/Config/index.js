@@ -7,19 +7,19 @@ export default class Config extends Component {
 
   onSubmit($e: SyntheticEvent) {
     $e.preventDefault();
-    this.props.applyForm();
+    this.props.configApplyForm();
   }
 
   props: {
     ip: string,
     startup: boolean,
-    applyForm: () => void,
-    setFormField: (field: string, $e: SyntheticInputEvent) => void,
-    toggleFormField: (field: string) => void,
+    configApplyForm: () => void,
+    configSetFormField: (field: string, $e: SyntheticInputEvent) => void,
+    configToggleFormField: (field: string) => void,
   }
 
   render() {
-    const { ip, startup, setFormField, toggleFormField } = this.props;
+    const { ip, startup, configSetFormField, configToggleFormField } = this.props;
 
     return (
       <div className="window-content window-content--flex-inner">
@@ -33,7 +33,7 @@ export default class Config extends Component {
                 name="ip"
                 className="form-control"
                 value={ip}
-                onChange={($e) => setFormField('ip', $e.target.value)}
+                onChange={($e) => configSetFormField('ip', $e.target.value)}
               />
             </div>
             <div className="checkbox">
@@ -43,7 +43,7 @@ export default class Config extends Component {
                   id="startup"
                   name="startup"
                   checked={startup}
-                  onChange={() => toggleFormField('startup')}
+                  onChange={() => configToggleFormField('startup')}
                 /> Run at startup
               </label>
             </div>

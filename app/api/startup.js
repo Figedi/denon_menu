@@ -5,17 +5,24 @@ const AutoLaunch = electron.remote.getGlobal('AutoLaunch');
 
 const denonLauncher = new AutoLaunch({
   name: 'Denon Remote',
-  mac: {
-    useLaunchAgent: true,
-  },
 });
 
 export function enable(): Promise<boolean> {
-  return denonLauncher.enable();
+  return getState().then((enabled) => {
+    if (enabled) {
+      return true;
+    }
+    return denonLauncher.enable();
+  });
 }
 
 export function disable(): Promise<boolean> {
-  return denonLauncher.disable();
+  return getState().then((enabled) => {
+    if (enabled) {
+      return denonLauncher.disable();
+    }
+    return true;
+  });
 }
 
 export function getState(): Promise<boolean> {

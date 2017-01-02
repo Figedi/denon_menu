@@ -21,11 +21,17 @@ function setOptimistic(state: DenonState, field: string, value: string | number)
 }
 
 function setVolume(state: DenonState, action: ReduxStandardAction): DenonState {
+  if (action.payload.code === 1) {
+    return state;
+  }
   const volume = action.payload.response[0]; // already normalized in API
   return { ...unsetPending(state, 'getVolume'), volume };
 }
 
 function setChannel(state: DenonState, action: ReduxStandardAction): DenonState {
+  if (action.payload.code === 1) {
+    return state;
+  }
   const channel = action.payload.response[0].slice(2); // SISAT -> SAT
   return { ...unsetPending(state, 'getChannel'), channel };
 }

@@ -53,10 +53,10 @@ function* handleRequest(payload) {
   }
   if (error) {
     yield put({ type: CONSTANTS[sanitizedMethod].rejected, payload: { ...payload, error } });
-  } else {
-    yield put({ type: CONSTANTS[sanitizedMethod].fulfilled, payload: { ...payload, response } });
+    return { error };
   }
-  return { error, response };
+  yield put({ type: CONSTANTS[sanitizedMethod].fulfilled, payload: { ...payload, ...response } });
+  return response;
 }
 
 function* rehydrate(host: string, withPower: boolean = true) {

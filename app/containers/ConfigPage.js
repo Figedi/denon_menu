@@ -28,22 +28,22 @@ function mapDispatchToProps(dispatch) {
 class ConfigPage extends Component {
 
   props: {
-    applyForm: () => void,
+    configCommitForm: () => void,
     push: (path: string) => void,
   };
 
   applyForm() {
-    this.props.applyForm();
+    this.props.configCommitForm();
     this.props.push('/');
   }
 
   render() {
-    const { applyForm, ...props } = this.props;
+    const { configCommitForm, ...props } = this.props;
 
     return (
       <div className="window window--flex">
         <Navbar to="/" />
-        <Config {...props} applyForm={this.applyForm.bind(this)} />
+        <Config {...props} configApplyForm={this.applyForm.bind(this)} />
         <Footer />
       </div>
     );

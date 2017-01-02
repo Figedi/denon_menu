@@ -1,27 +1,17 @@
 // @flow
-import { createAction } from 'redux-actions';
-
-import { startup as startupApi } from '../api';
+import { createActions } from 'redux-actions';
 
 export const CONFIG_ACTIONS = {
   setFormField: 'CONFIG/SET_FORM_FIELD',
   toggleFormField: 'CONFIG/TOGGLE_FORM_FIELD',
-  applyForm: 'CONFIG/APPLY_FORM',
+  commitForm: 'CONFIG/COMMIT_FORM',
   getState: 'CONFIG/GET_STATE',
 };
 
-export const setFormField = createAction(CONFIG_ACTIONS.setFormField, (field: string, value: string) => ({ field, value }));
+export const actions = createActions({
+  [CONFIG_ACTIONS.setFormField]: (field: string, value: string) => ({ field, value }),
+  [CONFIG_ACTIONS.toggleFormField]: (field: string) => ({ field }),
+}, CONFIG_ACTIONS.commitForm);
 
-export const toggleFormField = createAction(CONFIG_ACTIONS.toggleFormField, (field: string) => ({ field }));
-
-export const getState = createAction(CONFIG_ACTIONS.getState);
-
-export const applyForm = createAction(CONFIG_ACTIONS.applyForm, async (ip: string, startup: boolean) => {
-  let response;
-  if (startup) {
-    response = await startupApi.enable();
-  } else {
-    response = await startupApi.disable();
-  }
-  return response;
-});
+// export all created actions
+Object.keys(actions).map((actionName) => (exports[actionName] = actions[actionName]));
