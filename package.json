@@ -101,7 +101,6 @@
     "eslint-import-resolver-webpack": "^0.8.0",
     "eslint-loader": "^1.6.0",
     "eslint-plugin-flowtype": "^2.29.1",
-    "eslint-plugin-flowtype-errors": "^2.0.1",
     "eslint-plugin-import": "^2.1.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-mocha": "^4.7.0",

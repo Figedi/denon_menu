@@ -1,9 +1,23 @@
+---
 engines:
+  csslint:
+    enabled: true
   duplication:
     enabled: true
     config:
       languages:
-        javascript:
+      - javascript
   eslint:
     enabled: true
     channel: "eslint-3"
+  fixme:
+    enabled: false
+ratings:
+  paths:
+  - "**.css"
+  - "**.js"
+exclude_paths:
+- node_modules/
+- release/
+- app/node_modules/
+- app/dist/
