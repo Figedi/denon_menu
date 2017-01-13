@@ -17,6 +17,8 @@ engines:
         enabled: false
       import/no-named-as-default-member:
         enabled: false
+      import/no-named-as-default:
+        enabled: false
       import/no-unresolved:
         enabled: false
   fixme:
@@ -28,5 +30,6 @@ ratings:
 exclude_paths:
 - node_modules/
 - release/
+- flow-typed/
 - app/node_modules/
 - app/dist/
