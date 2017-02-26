@@ -1,7 +1,7 @@
 {
   "name": "denon_menu",
   "productName": "DenonMenu",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "A menubar application made with electron to control your denon receiver",
   "main": "./main.js",
   "author": {
