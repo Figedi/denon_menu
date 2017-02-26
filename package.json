@@ -1,7 +1,7 @@
 {
   "name": "denon_menu",
   "productName": "DenonMenu",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A menubar application made with electron to control your denon receiver",
   "main": "main.js",
   "scripts": {
@@ -18,8 +18,11 @@
     "package-all": "npm run build && build -m"
   },
   "build": {
+    "productName": "DenonRemote",
     "appId": "de.figedi.DenonRemote",
-    "category": "public.app-category.tools",
+    "mac": {
+      "category": "public.app-category.tools"
+    },
     "dmg": {
       "contents": [
         {
@@ -43,11 +46,11 @@
       "main.js",
       "main.js.map",
       "package.json"
-    ]
-  },
-  "directories": {
-    "buildResources": "resources",
-    "output": "release"
+    ],
+    "directories": {
+      "buildResources": "resources",
+      "output": "release"
+    }
   },
   "bin": {
     "electron": "./node_modules/.bin/electron"
