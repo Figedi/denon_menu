@@ -55,8 +55,14 @@ function resetPending(state: DenonState, action: ReduxStandardAction): DenonStat
   return { ...state, $pending: [], $error: action.payload };
 }
 
+function resetAll(): DenonState {
+  return INITAL_STATE;
+}
+
 export default function denonReducer(state: DenonState = INITAL_STATE, action: ReduxStandardAction): DenonState {
   switch (action.type) {
+    case DENON_ACTIONS.reset:
+      return resetAll();
     case DENON_ACTIONS.error:
       return resetPending(state, action);
     case CONSTANTS.getVolume.pending:

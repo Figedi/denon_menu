@@ -2,10 +2,10 @@
 import { createActions } from 'redux-actions';
 
 export const CONFIG_ACTIONS = {
-  setFormField: 'CONFIG/SET_FORM_FIELD',
-  toggleFormField: 'CONFIG/TOGGLE_FORM_FIELD',
-  commitForm: 'CONFIG/COMMIT_FORM',
-  getState: 'CONFIG/GET_STATE',
+  setFormField: 'CONFIG_SET_FORM_FIELD',
+  toggleFormField: 'CONFIG_TOGGLE_FORM_FIELD',
+  commitForm: 'CONFIG_COMMIT_FORM',
+  getState: 'CONFIG_GET_STATE',
 };
 
 export const actions = createActions({

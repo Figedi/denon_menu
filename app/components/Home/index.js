@@ -39,7 +39,7 @@ export default class Home extends Component {
         <div className={styles.modalContent}>
           <i className="fa fa-2x fa-times" />
           <h5>Error</h5>
-          <p>{$error.message}</p>
+          <p className={styles.errorMessage}>{$error.message}</p>
         </div>
       );
     } else if (inProgress) {

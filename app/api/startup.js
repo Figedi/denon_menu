@@ -5,6 +5,7 @@ const AutoLaunch = electron.remote.getGlobal('AutoLaunch');
 
 const denonLauncher = new AutoLaunch({
   name: 'Denon Remote',
+  isHidden: true,
 });
 
 export function enable(): Promise<boolean> {

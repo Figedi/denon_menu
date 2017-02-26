@@ -1,4 +1,4 @@
-import { call, select, take, fork, put, cancel, cancelled, race, actionChannel } from 'redux-saga/effects';
+import { call, select, take, fork, put, cancel, cancelled, actionChannel } from 'redux-saga/effects';
 import { buffers, delay } from 'redux-saga';
 import { REHYDRATE } from 'redux-persist/constants';
 import { get } from 'lodash';
@@ -12,7 +12,7 @@ const CONSTANTS = promiseHelpers.getPendingSymbols(DENON_ACTIONS);
 const getHost = (state) => state.config.ip;
 const getRehydrateTimeout = (state) => state.config.rehydrateTimeout;
 
-const MAX_ERRORS = 5;
+const MAX_ERRORS = 3;
 
 let denonChannel;
 
@@ -20,24 +20,11 @@ const watchedActions = Object.keys(DENON_ACTIONS)
   .filter((k) => k.indexOf('Interval') < 0 && k.indexOf('error') < 0 && k.indexOf('commitVolume') < 0)
   .map((k) => DENON_ACTIONS[k]);
 
-function* watchRequests() {
-  denonChannel = yield actionChannel(watchedActions, buffers.sliding(5));
-  let errors = 0;
-  let lastError;
-  while (errors < MAX_ERRORS) {
-    // 2- take from the channel
-    const { payload } = yield take(denonChannel);
-    // 3- Note that we're using a blocking call
-    const { error } = yield call(handleRequest, payload);
-    if (error) {
-      errors += 1;
-      lastError = error;
-    }
-  }
-  yield put(actions.denonError(lastError));
-}
 
 function* handleRequest(payload) {
+  if (!payload) {
+    return {};
+  }
   const { method, args } = payload;
   if (!method) {
     return {};
@@ -72,11 +59,13 @@ function* rehydrate(host: string, withPower: boolean = true) {
 
 function* startRehydrateInterval() {
   const rehydrateTimeout = yield select(getRehydrateTimeout);
+  let firstTime = true;
   try {
     while (true) { // eslint-disable-line
       const host = yield select(getHost);
-      yield call(rehydrate, host, false);
+      yield call(rehydrate, host, firstTime);
       yield call(delay, rehydrateTimeout);
+      firstTime = false;
     }
   } finally {
     if (yield cancelled()) {
@@ -85,18 +74,40 @@ function* startRehydrateInterval() {
   }
 }
 
+// =============================================================================
+// Watchers
+// =============================================================================
+
+function* watchRequests() {
+  denonChannel = yield actionChannel(watchedActions, buffers.sliding(5));
+  let errors = 0;
+  let lastError;
+  while (errors < MAX_ERRORS) {
+    // 2- take from the channel
+    const { payload } = yield take(denonChannel);
+    // 3- Note that we're using a blocking call
+    const { error } = yield call(handleRequest, payload);
+    if (error) {
+      errors += 1;
+      lastError = error;
+    }
+  }
+  yield put(actions.denonError(lastError)); // too many errors, emit error + clear channel afterwards
+}
+
 function* watchStart() {
   while (true) { // eslint-disable-line
     yield take(DENON_ACTIONS.startInterval);
+    yield put(actions.denonReset()); // always start fresh after mounting view
+    // start with fresh request watcher and start rehydrating periodically
+    const requestWatchTask = yield fork(watchRequests);
     const rehydrateTask = yield fork(startRehydrateInterval);
-    yield race({
-      error: take(DENON_ACTIONS.error),
-      stop: take(DENON_ACTIONS.stopInterval)
-    });
+    yield take([DENON_ACTIONS.error, DENON_ACTIONS.stopInterval]);
     yield cancel(rehydrateTask);
+    yield cancel(requestWatchTask);
   }
 }
-//
+
 function* watchRehydrate() {
   const action = yield take(REHYDRATE);
   if (get(action, 'payload.config.ip')) {
@@ -106,7 +117,6 @@ function* watchRehydrate() {
 
 export default function* root() {
   yield [
-    fork(watchRequests),
     fork(watchStart),
     fork(watchRehydrate),
   ];

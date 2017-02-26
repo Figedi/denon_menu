@@ -2,17 +2,18 @@
 import { createActions } from 'redux-actions';
 
 const DENON_ACTIONS = exports.DENON_ACTIONS = {
-  setVolume: 'DENON/SET_VOLUME',
-  commitVolume: 'DENON/COMMIT_VOLUME',
-  getVolume: 'DENON/GET_VOLUME',
-  setChannel: 'DENON/SET_CHANNEL',
-  getChannel: 'DENON/GET_CHANNEL',
-  setPower: 'DENON/SET_POWER',
-  getPower: 'DENON/GET_POWER',
-  startInterval: 'DENON/START_INTERVAL',
-  stopInterval: 'DENON/STOP_INTERVAL',
-  raw: 'DENON/RAW',
-  error: 'DENON/ERROR',
+  setVolume: 'DENON_SET_VOLUME',
+  commitVolume: 'DENON_COMMIT_VOLUME',
+  getVolume: 'DENON_GET_VOLUME',
+  setChannel: 'DENON_SET_CHANNEL',
+  getChannel: 'DENON_GET_CHANNEL',
+  setPower: 'DENON_SET_POWER',
+  getPower: 'DENON_GET_POWER',
+  startInterval: 'DENON_START_INTERVAL',
+  stopInterval: 'DENON_STOP_INTERVAL',
+  raw: 'DENON_RAW',
+  error: 'DENON_ERROR',
+  reset: 'DENON_RESET',
 };
 
 const getActions = createActions({
@@ -29,7 +30,7 @@ const setActions = createActions({
   [DENON_ACTIONS.error]: (error: Error) => ({ error }),
   // special case for setVolume -> allow premature updates and only commit afterwards
   [DENON_ACTIONS.commitVolume]: (amount: number) => ({ amount }),
-}, DENON_ACTIONS.startInterval, DENON_ACTIONS.stopInterval);
+}, DENON_ACTIONS.startInterval, DENON_ACTIONS.stopInterval, DENON_ACTIONS.reset);
 
 
 const actions = exports.actions = { ...getActions, ...setActions };

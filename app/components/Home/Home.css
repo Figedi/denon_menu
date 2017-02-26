@@ -49,3 +49,14 @@
   padding: 20px;
   margin-bottom: 20px;
 }
+
+.errorMessage {
+  text-align: center;
+  background-color: #f2f2f2;
+  color: black;
+  display: block;
+  margin: 10px 10px 0 10px;
+  border-radius: 5px;
+  padding: 5px;
+  font-family: monospace;
+}
