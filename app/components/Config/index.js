@@ -10,7 +10,7 @@ export default class Config extends Component {
     ip: string,
     startup: boolean,
     configApplyForm: () => void,
-    configSetFormField: (field: string, $e: SyntheticInputEvent) => void,
+    configSetFormField: (field: string, value: string) => void,
     configToggleFormField: (field: string) => void,
   };
 
@@ -19,8 +19,16 @@ export default class Config extends Component {
     this.props.configApplyForm();
   }
 
+  handleIpChange = ($e: SyntheticInputEvent) => {
+    this.props.configSetFormField('ip', $e.target.value);
+  };
+
+  handleStartupChange = () => {
+    this.props.configToggleFormField('startup');
+  };
+
   render() {
-    const { ip, startup, configSetFormField, configToggleFormField } = this.props;
+    const { ip, startup } = this.props;
 
     return (
       <Content className="window-content--flex-inner">
@@ -28,14 +36,7 @@ export default class Config extends Component {
           <div>
             <div className="form-group">
               <label htmlFor="ip">Ip-Address</label>
-              <input
-                type="text"
-                id="ip"
-                name="ip"
-                className="form-control"
-                value={ip}
-                onChange={$e => configSetFormField('ip', $e.target.value)}
-              />
+              <input type="text" id="ip" name="ip" className="form-control" value={ip} onChange={this.handleIpChange} />
             </div>
             <div className="checkbox">
               <label htmlFor="startup">
@@ -44,7 +45,7 @@ export default class Config extends Component {
                   id="startup"
                   name="startup"
                   checked={startup}
-                  onChange={() => configToggleFormField('startup')}
+                  onChange={this.handleStartupChange}
                 />
                 {' '}
                 Run at startup

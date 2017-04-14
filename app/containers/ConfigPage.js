@@ -11,6 +11,11 @@ import Footer from './Footer';
 
 import * as ConfigActions from '../actions/config';
 
+const actions = {
+  ...ConfigActions,
+  push: path => push(path),
+};
+
 function mapStateToProps(state) {
   const { ip, startup } = state.config;
   return {
@@ -20,10 +25,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    ...bindActionCreators(ConfigActions, dispatch),
-    push: path => dispatch(push(path)),
-  };
+  return bindActionCreators(actions, dispatch);
 }
 
 class ConfigPage extends Component {
