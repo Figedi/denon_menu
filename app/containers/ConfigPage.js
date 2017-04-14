@@ -32,10 +32,10 @@ class ConfigPage extends Component {
     push: (path: string) => void,
   };
 
-  applyForm() {
+  applyForm = () => {
     this.props.configCommitForm();
     this.props.push('/');
-  }
+  };
 
   render() {
     const { configCommitForm, ...props } = this.props;
@@ -43,7 +43,7 @@ class ConfigPage extends Component {
     return (
       <Window className="window--flex">
         <Navbar to="/" />
-        <Config {...props} configApplyForm={this.applyForm.bind(this)} />
+        <Config {...props} configApplyForm={this.applyForm} />
         <Footer />
       </Window>
     );

@@ -8,7 +8,6 @@ const getStartup = state => state.config.startup;
 
 function* watchConfigChange() {
   while (true) {
-    // eslint-disable-line
     yield take(CONFIG_ACTIONS.commitForm);
     const startup = yield select(getStartup);
     if (startup) {

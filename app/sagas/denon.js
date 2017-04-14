@@ -61,7 +61,6 @@ function* startRehydrateInterval() {
   let firstTime = true;
   try {
     while (true) {
-      // eslint-disable-line
       const host = yield select(getHost);
       yield call(rehydrate, host, firstTime);
       yield call(delay, rehydrateTimeout);

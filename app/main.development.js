@@ -1,4 +1,4 @@
-/* eslint global-require: 0, flowtype-errors/show-errors: 0 */
+/* eslint global-require: 0, flowtype-errors/show-errors: 0, no-console: 0 */
 // @flow
 import { Menu } from 'electron';
 import menubar from 'menubar';

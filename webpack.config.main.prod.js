@@ -5,6 +5,7 @@
 import webpack from 'webpack';
 import merge from 'webpack-merge';
 import BabiliPlugin from 'babili-webpack-plugin';
+
 import baseConfig from './webpack.config.base';
 
 export default merge.smart(baseConfig, {
@@ -17,7 +18,7 @@ export default merge.smart(baseConfig, {
   // 'main.js' in root
   output: {
     path: __dirname,
-    filename: './app/main.js'
+    filename: './app/main.js',
   },
 
   plugins: [
@@ -36,8 +37,8 @@ export default merge.smart(baseConfig, {
      * development checks
      */
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
-    })
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
+    }),
   ],
 
   /**
@@ -47,6 +48,6 @@ export default merge.smart(baseConfig, {
    */
   node: {
     __dirname: false,
-    __filename: false
+    __filename: false,
   },
 });

@@ -10,7 +10,7 @@ import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
 import rootSaga from '../sagas';
 
-export default (initialState: ?Object) => {
+export default (initialState: ?RootReducer) => {
   const middleware = [];
   const enhancers = [];
 

@@ -13,10 +13,10 @@ export default class Slider extends Component {
     this.delayedCallback = debounce(this.props.onChange, 400);
   }
 
-  onChange($e) {
+  onChange = $e => {
     $e.persist();
     this.delayedCallback($e);
-  }
+  };
 
   render() {
     const { min, max, step } = this.props;
@@ -24,14 +24,7 @@ export default class Slider extends Component {
     return (
       <form>
         <div className="form-group">
-          <input
-            onChange={this.onChange.bind(this)}
-            min={min}
-            max={max}
-            step={step}
-            type="range"
-            className="form-control"
-          />
+          <input onChange={this.onChange} min={min} max={max} step={step} type="range" className="form-control" />
         </div>
       </form>
     );
