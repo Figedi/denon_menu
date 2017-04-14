@@ -1,13 +1,11 @@
 // @flow
-import React, { Component, PropTypes } from 'react';
-
-import 'photon/dist/css/photon.css';
-import 'font-awesome/css/font-awesome.css';
-import 'rc-slider/assets/index.css';
+import React, { Component } from 'react';
+import type { Children } from 'react';
 
 export default class App extends Component {
-  static propTypes = {
-    children: PropTypes.element.isRequired
+
+  props: {
+    children: Children,
   };
 
   render() {

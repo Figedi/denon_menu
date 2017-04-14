@@ -9,17 +9,16 @@ import { promiseHelpers } from '../utils';
 
 const CONSTANTS = promiseHelpers.getPendingSymbols(DENON_ACTIONS);
 
-const getHost = (state) => state.config.ip;
-const getRehydrateTimeout = (state) => state.config.rehydrateTimeout;
+const getHost = state => state.config.ip;
+const getRehydrateTimeout = state => state.config.rehydrateTimeout;
 
 const MAX_ERRORS = 3;
 
 let denonChannel;
 
 const watchedActions = Object.keys(DENON_ACTIONS)
-  .filter((k) => k.indexOf('Interval') < 0 && k.indexOf('error') < 0 && k.indexOf('commitVolume') < 0)
-  .map((k) => DENON_ACTIONS[k]);
-
+  .filter(k => k.indexOf('Interval') < 0 && k.indexOf('error') < 0 && k.indexOf('commitVolume') < 0)
+  .map(k => DENON_ACTIONS[k]);
 
 function* handleRequest(payload) {
   if (!payload) {
@@ -61,7 +60,8 @@ function* startRehydrateInterval() {
   const rehydrateTimeout = yield select(getRehydrateTimeout);
   let firstTime = true;
   try {
-    while (true) { // eslint-disable-line
+    while (true) {
+      // eslint-disable-line
       const host = yield select(getHost);
       yield call(rehydrate, host, firstTime);
       yield call(delay, rehydrateTimeout);
@@ -96,7 +96,7 @@ function* watchRequests() {
 }
 
 function* watchStart() {
-  while (true) { // eslint-disable-line
+  while (true) {
     yield take(DENON_ACTIONS.startInterval);
     yield put(actions.denonReset()); // always start fresh after mounting view
     // start with fresh request watcher and start rehydrating periodically
@@ -116,8 +116,5 @@ function* watchRehydrate() {
 }
 
 export default function* root() {
-  yield [
-    fork(watchStart),
-    fork(watchRehydrate),
-  ];
+  yield [fork(watchStart), fork(watchRehydrate)];
 }

@@ -13,10 +13,7 @@ import rootSaga from '../sagas';
 const router = routerMiddleware(hashHistory);
 const sagaMiddleware = createSagaMiddleware();
 
-const enhancer = compose(
-  applyMiddleware(sagaMiddleware, thunk, router),
-  autoRehydrate(),
-);
+const enhancer = compose(applyMiddleware(sagaMiddleware, thunk, router), autoRehydrate());
 export default function configureStore(initialState: Object) {
   const store = createStore(rootReducer, initialState, enhancer);
 

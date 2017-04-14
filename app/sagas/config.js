@@ -4,10 +4,11 @@ import { REHYDRATE } from 'redux-persist/constants';
 import { CONFIG_ACTIONS, configSetFormField } from '../actions/config';
 import { enable, disable, getState } from '../api/startup';
 
-const getStartup = (state) => state.config.startup;
+const getStartup = state => state.config.startup;
 
 function* watchConfigChange() {
-  while (true) { // eslint-disable-line
+  while (true) {
+    // eslint-disable-line
     yield take(CONFIG_ACTIONS.commitForm);
     const startup = yield select(getStartup);
     if (startup) {
@@ -25,8 +26,5 @@ function* watchRehydrate() {
 }
 
 export default function* root() {
-  yield [
-    fork(watchConfigChange),
-    fork(watchRehydrate),
-  ];
+  yield [fork(watchConfigChange), fork(watchRehydrate)];
 }

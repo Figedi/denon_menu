@@ -6,39 +6,55 @@ import createSagaMiddleware from 'redux-saga';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import localForage from 'localforage';
 
-import createLogger from 'redux-logger';
+import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
 import rootSaga from '../sagas';
 
-const actionCreators = {
-  push,
-};
+export default (initialState: ?Object) => {
+  const middleware = [];
+  const enhancers = [];
 
-const logger = createLogger({
-  level: 'info',
-  collapsed: true
-});
+  // saga midldeware
+  const sagaMiddleware = createSagaMiddleware();
+  middleware.push(sagaMiddleware);
 
-const sagaMiddleware = createSagaMiddleware();
+  // Thunk Middleware
+  middleware.push(thunk);
 
+  // Logging Middleware
+  const logger = createLogger({
+    level: 'info',
+    collapsed: true,
+  });
+  middleware.push(logger);
 
-const router = routerMiddleware(hashHistory);
+  // Router Middleware
+  const router = routerMiddleware(hashHistory);
+  middleware.push(router);
 
-// If Redux DevTools Extension is installed use it, otherwise use Redux compose
-/* eslint-disable no-underscore-dangle */
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-    // Options: http://zalmoxisus.github.io/redux-devtools-extension/API/Arguments.html
-    actionCreators,
-  }) :
-  compose;
-/* eslint-enable no-underscore-dangle */
-const enhancer = composeEnhancers(
-  applyMiddleware(sagaMiddleware, thunk, router, logger),
-  autoRehydrate(),
-);
+  // Redux DevTools Configuration
+  const actionCreators = {
+    push,
+  };
 
-export default function configureStore(initialState: Object) {
+  // Redux persist
+  enhancers.push(autoRehydrate());
+
+  // If Redux DevTools Extension is installed use it, otherwise use Redux compose
+  /* eslint-disable no-underscore-dangle */
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+        // Options: http://zalmoxisus.github.io/redux-devtools-extension/API/Arguments.html
+      actionCreators,
+    })
+    : compose;
+  /* eslint-enable no-underscore-dangle */
+
+  // Apply Middleware & Compose Enhancers
+  enhancers.push(applyMiddleware(...middleware));
+
+  const enhancer = composeEnhancers(...enhancers);
+
   const store = createStore(rootReducer, initialState, enhancer);
 
   sagaMiddleware.run(rootSaga);
@@ -49,10 +65,11 @@ export default function configureStore(initialState: Object) {
   });
 
   if (module.hot) {
-    module.hot.accept('../reducers', () =>
-      store.replaceReducer(require('../reducers')) // eslint-disable-line global-require
+    module.hot.accept(
+      '../reducers',
+      () => store.replaceReducer(require('../reducers')), // eslint-disable-line global-require
     );
   }
 
   return store;
-}
+};

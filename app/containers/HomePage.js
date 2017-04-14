@@ -2,6 +2,8 @@
 import { bindActionCreators } from 'redux';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Window } from 'react-photonkit';
+
 import Home from '../components/Home';
 import Navbar from '../components/Navbar';
 import Footer from './Footer';
@@ -25,14 +27,13 @@ function mapDispatchToProps(dispatch) {
 }
 
 class HomePage extends Component {
-
   render() {
     return (
-      <div className="window window--flex">
+      <Window className="window--flex">
         <Navbar to="/config" />
         <Home {...this.props} />
         <Footer />
-      </div>
+      </Window>
     );
   }
 }

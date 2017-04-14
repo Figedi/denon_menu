@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import { Window } from 'react-photonkit';
 
 import Config from '../components/Config';
 import Navbar from '../components/Navbar';
@@ -21,12 +22,11 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     ...bindActionCreators(ConfigActions, dispatch),
-    push: (path) => dispatch(push(path))
+    push: path => dispatch(push(path)),
   };
 }
 
 class ConfigPage extends Component {
-
   props: {
     configCommitForm: () => void,
     push: (path: string) => void,
@@ -41,11 +41,11 @@ class ConfigPage extends Component {
     const { configCommitForm, ...props } = this.props;
 
     return (
-      <div className="window window--flex">
+      <Window className="window--flex">
         <Navbar to="/" />
         <Config {...props} configApplyForm={this.applyForm.bind(this)} />
         <Footer />
-      </div>
+      </Window>
     );
   }
 }

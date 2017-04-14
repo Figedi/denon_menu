@@ -47,7 +47,7 @@ function setPending(state: DenonState, pendingAction: string): DenonState {
 }
 
 function unsetPending(state: DenonState, unsetAction: string): DenonState {
-  const $pending = state.$pending.filter((pendingAction) => pendingAction !== unsetAction);
+  const $pending = state.$pending.filter(pendingAction => pendingAction !== unsetAction);
   return { ...state, $pending };
 }
 

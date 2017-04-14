@@ -11,10 +11,9 @@ function mapDispatchToProps(dispatch) {
 }
 
 class HomePage extends Component {
-
   props: {
     quit: () => void,
-  }
+  };
 
   render() {
     return <Footer onQuit={this.props.quit} />;

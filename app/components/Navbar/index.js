@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import { Toolbar } from 'react-photonkit';
 
 export default class Navbar extends Component {
-
   props: {
     to: string,
-  }
+  };
 
   render() {
     return (
-      <header className="toolbar toolbar-header">
-        <h1 className="title">Denon Receiver</h1>
+      <Toolbar ptType="header" title="Denon Receiver">
         <div className="toolbar-actions">
           <Link to={this.props.to}>
             <button className="btn btn-default pull-right">
@@ -18,7 +17,7 @@ export default class Navbar extends Component {
             </button>
           </Link>
         </div>
-      </header>
+      </Toolbar>
     );
   }
 }

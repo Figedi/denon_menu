@@ -3,22 +3,14 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import Modal from 'react-modal';
 import Slider from 'rc-slider';
+import { Content } from 'react-photonkit';
 
 import styles from './Home.css';
 
 export default class Home extends Component {
-
-  componentDidMount() {
-    this.props.denonStartInterval();
-  }
-
-  componentWillUnmount() {
-    this.props.denonStopInterval();
-  }
-
   props: {
     $pending: Array<string>,
-    $error: Error,
+    $error: ?Error,
     volume: number,
     host: string,
     channel: string,
@@ -31,9 +23,17 @@ export default class Home extends Component {
     denonSetChannel: (host: string, channel: string) => void,
   };
 
+  componentDidMount() {
+    this.props.denonStartInterval();
+  }
+
+  componentWillUnmount() {
+    this.props.denonStopInterval();
+  }
+
   renderModalContent() {
     const { denonSetPower, host, $pending, $error } = this.props;
-    const inProgress = $pending.length && $pending.filter((pendingAction) => pendingAction === 'getPower').length > 0;
+    const inProgress = $pending.length && $pending.filter(pendingAction => pendingAction === 'getPower').length > 0;
     if ($error) {
       return (
         <div className={styles.modalContent}>
@@ -61,19 +61,22 @@ export default class Home extends Component {
 
   render() {
     const { volume, denonSetChannel, denonCommitVolume, denonSetVolume, host, channel, power } = this.props;
-    const buttonClasses = type => classNames({
-      btn: true,
-      'btn-primary': type.indexOf(channel) > -1,
-      'btn-default': type.indexOf(channel) < 0,
-    });
+    const buttonClasses = type =>
+      classNames({
+        btn: true,
+        'btn-primary': type.indexOf(channel) > -1,
+        'btn-default': type.indexOf(channel) < 0,
+      });
     return (
-      <div className="window-content window-content--flex-inner">
+      <Content className="window-content--flex-inner">
         <Modal
           isOpen={power !== 'ON'}
           contentLabel="Power off :("
           className={styles.modal}
           overlayClassName={styles.overlay}
-        >{this.renderModalContent()}</Modal>
+        >
+          {this.renderModalContent()}
+        </Modal>
         <div className={styles.slider}>
           <Slider
             onChange={denonCommitVolume}
@@ -89,7 +92,7 @@ export default class Home extends Component {
           <button className={buttonClasses('SAT/CBL')} onClick={() => denonSetChannel(host, 'SAT')}>PC</button>
           <button className={buttonClasses('TV')} onClick={() => denonSetChannel(host, 'TV')}>TV</button>
         </div>
-      </div>
+      </Content>
     );
   }
 }

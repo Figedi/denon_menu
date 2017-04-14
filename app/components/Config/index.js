@@ -1,29 +1,30 @@
 // @flow
 import React, { Component } from 'react';
+import { Content } from 'react-photonkit';
+
 import styles from './Config.css';
 
 // todo: wenn change in ip ->  rehydrate cycle
 export default class Config extends Component {
-
-  onSubmit($e: SyntheticEvent) {
-    $e.preventDefault();
-    this.props.configApplyForm();
-  }
-
   props: {
     ip: string,
     startup: boolean,
     configApplyForm: () => void,
     configSetFormField: (field: string, $e: SyntheticInputEvent) => void,
     configToggleFormField: (field: string) => void,
+  };
+
+  onSubmit($e: SyntheticInputEvent) {
+    $e.preventDefault();
+    this.props.configApplyForm();
   }
 
   render() {
     const { ip, startup, configSetFormField, configToggleFormField } = this.props;
 
     return (
-      <div className="window-content window-content--flex-inner">
-        <form className={styles.form} onSubmit={($e) => this.onSubmit($e)}>
+      <Content className="window-content--flex-inner">
+        <form className={styles.form} onSubmit={$e => this.onSubmit($e)}>
           <div>
             <div className="form-group">
               <label htmlFor="ip">Ip-Address</label>
@@ -33,7 +34,7 @@ export default class Config extends Component {
                 name="ip"
                 className="form-control"
                 value={ip}
-                onChange={($e) => configSetFormField('ip', $e.target.value)}
+                onChange={$e => configSetFormField('ip', $e.target.value)}
               />
             </div>
             <div className="checkbox">
@@ -44,7 +45,9 @@ export default class Config extends Component {
                   name="startup"
                   checked={startup}
                   onChange={() => configToggleFormField('startup')}
-                /> Run at startup
+                />
+                {' '}
+                Run at startup
               </label>
             </div>
           </div>
@@ -52,7 +55,7 @@ export default class Config extends Component {
             <button className="btn btn-positive" type="submit">Save</button>
           </div>
         </form>
-      </div>
+      </Content>
     );
   }
 }

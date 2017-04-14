@@ -1,3 +1,6 @@
+@import "~font-awesome/css/font-awesome.css";
+@import "~rc-slider/assets/index.css";
+
 .window.window--flex {
   display: flex;
   justify-content: space-between;
@@ -19,6 +22,7 @@
 .rc-slider-handle {
   border: 2px solid #000;
 }
+
 .rc-slider-handle:hover {
   border-color: #000;
 }

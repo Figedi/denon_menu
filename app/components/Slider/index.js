@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import { debounce } from 'lodash';
 
 export default class Slider extends Component {
+  props: {
+    min: number,
+    max: number,
+    step: number,
+    onChange: ($event: SyntheticEvent) => void,
+  };
 
   componentWillMount() {
     this.delayedCallback = debounce(this.props.onChange, 400);
@@ -12,16 +18,8 @@ export default class Slider extends Component {
     this.delayedCallback($e);
   }
 
-  props: {
-    min: number,
-    max: number,
-    step: number,
-    current: number,
-    onChange: ($event: SyntheticEvent) => void,
-  }
-
   render() {
-    const { min, max, step, current } = this.props;
+    const { min, max, step } = this.props;
 
     return (
       <form>
