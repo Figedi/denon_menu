@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { Window } from 'react-photonkit';
 
 import Config from '../components/Config';
 import Navbar from '../components/Navbar';
@@ -43,11 +42,11 @@ class ConfigPage extends Component {
     const { configCommitForm, ...props } = this.props;
 
     return (
-      <Window className="window--flex">
+      <div className="window window--flex">
         <Navbar to="/" />
         <Config {...props} configApplyForm={this.applyForm} />
         <Footer />
-      </Window>
+      </div>
     );
   }
 }

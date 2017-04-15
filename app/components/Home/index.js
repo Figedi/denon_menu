@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import Modal from 'react-modal';
 import Slider from 'rc-slider';
-import { Content } from 'react-photonkit';
 
 import styles from './Home.css';
 
@@ -90,7 +89,7 @@ export default class Home extends Component {
         'btn-default': type.indexOf(channel) < 0,
       });
     return (
-      <Content className="window-content--flex-inner">
+      <div className="window-content window-content--flex-inner">
         <Modal
           isOpen={power !== 'ON'}
           contentLabel="Power off :("
@@ -114,7 +113,7 @@ export default class Home extends Component {
           <button className={buttonClasses('SAT/CBL')} onClick={this.handlePCClick}>PC</button>
           <button className={buttonClasses('TV')} onClick={this.handleTVClick}>TV</button>
         </div>
-      </Content>
+      </div>
     );
   }
 }

@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react';
-import { Content } from 'react-photonkit';
 
 import styles from './Config.css';
 
@@ -31,7 +30,7 @@ export default class Config extends Component {
     const { ip, startup } = this.props;
 
     return (
-      <Content className="window-content--flex-inner">
+      <div className="window-content window-content--flex-inner">
         <form className={styles.form} onSubmit={$e => this.onSubmit($e)}>
           <div>
             <div className="form-group">
@@ -56,7 +55,7 @@ export default class Config extends Component {
             <button className="btn btn-positive" type="submit">Save</button>
           </div>
         </form>
-      </Content>
+      </div>
     );
   }
 }
