@@ -1,6 +1,6 @@
 Denon Menu
 ---------
-[![Dependency Status](https://david-dm.org/figedi/denon_menu.svg)](https://david-dm.org/figedi/denon_menu)
+[![Dependency Status](https://www.versioneye.com/user/projects/586bb41f3ab148003228abc7/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/586bb41f3ab148003228abc7)
 [![Code Climate](https://codeclimate.com/github/Figedi/denon_menu/badges/gpa.svg)](https://codeclimate.com/github/Figedi/denon_menu)
 [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
 

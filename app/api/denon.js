@@ -28,7 +28,7 @@ function getInstance(host) {
  */
 function exec(host: string, cmd: string) {
   return new Promise((resolve, reject) => {
-    getInstance(host).push(cmd, (clientResponse) => {
+    getInstance(host).push(cmd, clientResponse => {
       const { error, ...rest } = clientResponse;
       if (error) {
         reject(error);
@@ -40,13 +40,19 @@ function exec(host: string, cmd: string) {
 }
 
 export function setVolume(host: string, amount: number) {
-  const normalizedAmount = parseInt((`${amount}`).replace(/\./g, ''), 10);
+  let normalizedAmount;
+  if (amount < 10) {
+    normalizedAmount = `0${amount}`.replace(/\./g, '');
+  } else {
+    normalizedAmount = `${amount}`.replace(/\./g, '');
+  }
   return exec(host, `MV${normalizedAmount}`);
 }
 
 export function getVolume(host: string) {
-  return exec(host, 'MV?').then((response) => {
-    if (response.code === 1) { // no response received
+  return exec(host, 'MV?').then(response => {
+    if (response.code === 1) {
+      // no response received
       return response;
     }
     const volume = response.response[0].slice(2); // MV465 -> 46.5

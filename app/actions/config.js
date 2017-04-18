@@ -8,10 +8,15 @@ export const CONFIG_ACTIONS = {
   getState: 'CONFIG_GET_STATE',
 };
 
-export const actions = createActions({
-  [CONFIG_ACTIONS.setFormField]: (field: string, value: string) => ({ field, value }),
-  [CONFIG_ACTIONS.toggleFormField]: (field: string) => ({ field }),
-}, CONFIG_ACTIONS.commitForm);
+export const actions = createActions(
+  {
+    [CONFIG_ACTIONS.setFormField]: (field: string, value: string | boolean) => ({ field, value }),
+    [CONFIG_ACTIONS.toggleFormField]: (field: string) => ({ field }),
+  },
+  CONFIG_ACTIONS.commitForm,
+);
 
 // export all created actions
-Object.keys(actions).map((actionName) => (exports[actionName] = actions[actionName]));
+Object.keys(actions).forEach(actionName => {
+  exports[actionName] = actions[actionName];
+});

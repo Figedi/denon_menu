@@ -9,8 +9,14 @@ import Navbar from '../components/Navbar';
 import Footer from './Footer';
 
 import * as ConfigActions from '../actions/config';
+import type { RootState } from '../reducers';
 
-function mapStateToProps(state) {
+const actions = {
+  ...ConfigActions,
+  push: path => push(path),
+};
+
+function mapStateToProps(state: RootState) {
   const { ip, startup } = state.config;
   return {
     ip,
@@ -18,24 +24,20 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    ...bindActionCreators(ConfigActions, dispatch),
-    push: (path) => dispatch(push(path))
-  };
+function mapDispatchToProps(dispatch: Dispatch) {
+  return bindActionCreators(actions, dispatch);
 }
 
 class ConfigPage extends Component {
-
   props: {
     configCommitForm: () => void,
     push: (path: string) => void,
   };
 
-  applyForm() {
+  applyForm = () => {
     this.props.configCommitForm();
     this.props.push('/');
-  }
+  };
 
   render() {
     const { configCommitForm, ...props } = this.props;
@@ -43,7 +45,7 @@ class ConfigPage extends Component {
     return (
       <div className="window window--flex">
         <Navbar to="/" />
-        <Config {...props} configApplyForm={this.applyForm.bind(this)} />
+        <Config {...props} configApplyForm={this.applyForm} />
         <Footer />
       </div>
     );

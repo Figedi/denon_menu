@@ -1,7 +1,7 @@
 // @flow
 import { createActions } from 'redux-actions';
 
-const DENON_ACTIONS = exports.DENON_ACTIONS = {
+const DENON_ACTIONS = {
   setVolume: 'DENON_SET_VOLUME',
   commitVolume: 'DENON_COMMIT_VOLUME',
   getVolume: 'DENON_GET_VOLUME',
@@ -22,17 +22,26 @@ const getActions = createActions({
   [DENON_ACTIONS.getPower]: (host: string) => ({ method: 'getPower', args: [host] }),
 });
 
-const setActions = createActions({
-  [DENON_ACTIONS.setChannel]: (host: string, channel: string) => ({ method: 'setChannel', args: [host, channel] }),
-  [DENON_ACTIONS.setPower]: (host: string, state: string) => ({ method: 'setPower', args: [host, state] }),
-  [DENON_ACTIONS.setVolume]: (host: string, amount: number) => ({ method: 'setVolume', args: [host, amount] }),
-  [DENON_ACTIONS.raw]: (host: string, cmd: string) => ({ method: 'raw', args: [host, cmd] }),
-  [DENON_ACTIONS.error]: (error: Error) => ({ error }),
-  // special case for setVolume -> allow premature updates and only commit afterwards
-  [DENON_ACTIONS.commitVolume]: (amount: number) => ({ amount }),
-}, DENON_ACTIONS.startInterval, DENON_ACTIONS.stopInterval, DENON_ACTIONS.reset);
+const setActions = createActions(
+  {
+    [DENON_ACTIONS.setChannel]: (host: string, channel: string) => ({ method: 'setChannel', args: [host, channel] }),
+    [DENON_ACTIONS.setPower]: (host: string, state: string) => ({ method: 'setPower', args: [host, state] }),
+    [DENON_ACTIONS.setVolume]: (host: string, amount: number) => ({ method: 'setVolume', args: [host, amount] }),
+    [DENON_ACTIONS.raw]: (host: string, cmd: string) => ({ method: 'raw', args: [host, cmd] }),
+    [DENON_ACTIONS.error]: (error: Error) => ({ error }),
+    // special case for setVolume -> allow premature updates and only commit afterwards
+    [DENON_ACTIONS.commitVolume]: (amount: number) => ({ amount }),
+  },
+  DENON_ACTIONS.startInterval,
+  DENON_ACTIONS.stopInterval,
+  DENON_ACTIONS.reset,
+);
 
-
-const actions = exports.actions = { ...getActions, ...setActions };
+const actions = { ...getActions, ...setActions };
 // export all created actions
-Object.keys(actions).map((actionName) => (exports[actionName] = actions[actionName]));
+exports.DENON_ACTIONS = DENON_ACTIONS;
+exports.actions = actions;
+
+Object.keys(actions).forEach(actionName => {
+  exports[actionName] = actions[actionName];
+});

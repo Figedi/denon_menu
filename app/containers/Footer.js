@@ -6,15 +6,14 @@ import Footer from '../components/Footer';
 
 import * as ElectronActions from '../actions/electron';
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(ElectronActions, dispatch);
 }
 
 class HomePage extends Component {
-
   props: {
     quit: () => void,
-  }
+  };
 
   render() {
     return <Footer onQuit={this.props.quit} />;
