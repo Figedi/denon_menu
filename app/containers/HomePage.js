@@ -2,16 +2,19 @@
 import { bindActionCreators } from 'redux';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import Home from '../components/Home';
 import Navbar from '../components/Navbar';
 import Footer from './Footer';
 
 import * as DenonActions from '../actions/denon';
+import type { RootState } from '../reducers';
 
-function mapStateToProps(state) {
+function mapStateToProps(state: RootState) {
   const { volume, power, channel, $pending, $error } = state.denon;
+  const host = state.config.ip;
   return {
-    host: state.config.ip,
+    host,
     volume,
     power,
     channel,
@@ -20,12 +23,11 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(DenonActions, dispatch);
 }
 
 class HomePage extends Component {
-
   render() {
     return (
       <div className="window window--flex">

@@ -1,4 +1,4 @@
-// @flow
+/* @flow */
 
 import { DENON_ACTIONS } from '../actions/denon';
 import type { ReduxStandardAction } from '../actions';
@@ -24,7 +24,8 @@ function setVolume(state: DenonState, action: ReduxStandardAction): DenonState {
   if (action.payload.code === 1) {
     return state;
   }
-  const volume = action.payload.response[0]; // already normalized in API
+  const volume = parseInt(action.payload.response[0], 10); // already normalized in API
+  console.log('dat volume is', volume, typeof volume);
   return { ...unsetPending(state, 'getVolume'), volume };
 }
 
@@ -47,7 +48,7 @@ function setPending(state: DenonState, pendingAction: string): DenonState {
 }
 
 function unsetPending(state: DenonState, unsetAction: string): DenonState {
-  const $pending = state.$pending.filter((pendingAction) => pendingAction !== unsetAction);
+  const $pending = state.$pending.filter(pendingAction => pendingAction !== unsetAction);
   return { ...state, $pending };
 }
 

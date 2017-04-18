@@ -1,3 +1,5 @@
+/* eslint global-require: 1, flowtype-errors/show-errors: 0 */
+
 import { Menu } from 'electron';
 import menubar from 'menubar';
 
@@ -25,20 +27,11 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const installExtensions = async () => {
-  if (process.env.NODE_ENV === 'development') {
-    const installer = require('electron-devtools-installer'); // eslint-disable-line global-require
+  const installer = require('electron-devtools-installer');
+  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
+  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
 
-    const extensions = [
-      'REACT_DEVELOPER_TOOLS',
-      'REDUX_DEVTOOLS'
-    ];
-    const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-    for (const name of extensions) { // eslint-disable-line
-      try {
-        await installer.default(installer[name], forceDownload);
-      } catch (e) {} // eslint-disable-line
-    }
-  }
+  return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload))).catch(console.log);
 };
 
 mb = menubar({
@@ -74,12 +67,14 @@ mb.on('ready', async () => {
     mainWindow.webContents.on('context-menu', (e, props) => {
       const { x, y } = props;
 
-      Menu.buildFromTemplate([{
-        label: 'Inspect element',
-        click() {
-          mainWindow.inspectElement(x, y);
-        }
-      }]).popup(mainWindow);
+      Menu.buildFromTemplate([
+        {
+          label: 'Inspect element',
+          click() {
+            mainWindow.inspectElement(x, y);
+          },
+        },
+      ]).popup(mainWindow);
     });
   }
 });

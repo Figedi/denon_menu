@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
+import { Toolbar } from 'react-photonkit';
 
 export default class Footer extends Component {
-
   props: {
     onQuit: () => void,
-  }
+  };
 
   render() {
     return (
-      <footer className="toolbar toolbar-footer">
+      <Toolbar ptType="footer">
         <div className="toolbar-actions">
           <button onClick={this.props.onQuit} className="btn btn-primary pull-right">Close</button>
         </div>
-      </footer>
+      </Toolbar>
     );
   }
 }
