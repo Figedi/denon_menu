@@ -1,5 +1,5 @@
-/* eslint global-require: 0, flowtype-errors/show-errors: 0, no-console: 0 */
-// @flow
+/* eslint global-require: 1, flowtype-errors/show-errors: 0 */
+
 import { Menu } from 'electron';
 import menubar from 'menubar';
 
@@ -50,9 +50,7 @@ mb.on('ready', async () => {
   mainWindow = mb.window;
 
   app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-      app.quit();
-    }
+    if (process.platform !== 'darwin') app.quit();
   });
 
   mainWindow.webContents.on('did-finish-load', () => {

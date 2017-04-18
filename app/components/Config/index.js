@@ -9,7 +9,7 @@ export default class Config extends Component {
     ip: string,
     startup: boolean,
     configApplyForm: () => void,
-    configSetFormField: (field: string, value: string) => void,
+    configSetFormField: (field: string, value: string | boolean) => void,
     configToggleFormField: (field: string) => void,
   };
 

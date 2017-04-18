@@ -10,9 +10,9 @@ import type { ConfigState } from './config';
 import denon from './denon';
 import config from './config';
 
-export type RootReducer = Reducer<{ config: ConfigState, denon: DenonState, routing: any }, ReduxStandardAction>;
+export type RootState = Reducer<{ config: ConfigState, denon: DenonState, routing: any }, ReduxStandardAction>;
 
-const rootReducer: RootReducer = combineReducers({
+const rootReducer: RootState = combineReducers({
   routing,
   denon,
   config,

@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 
 import * as ElectronActions from '../actions/electron';
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(ElectronActions, dispatch);
 }
 

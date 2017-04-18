@@ -9,13 +9,14 @@ import Navbar from '../components/Navbar';
 import Footer from './Footer';
 
 import * as ConfigActions from '../actions/config';
+import type { RootState } from '../reducers';
 
 const actions = {
   ...ConfigActions,
   push: path => push(path),
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state: RootState) {
   const { ip, startup } = state.config;
   return {
     ip,
@@ -23,7 +24,7 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(actions, dispatch);
 }
 
