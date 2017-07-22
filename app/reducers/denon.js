@@ -25,7 +25,6 @@ function setVolume(state: DenonState, action: ReduxStandardAction): DenonState {
     return state;
   }
   const volume = parseInt(action.payload.response[0], 10); // already normalized in API
-  console.log('dat volume is', volume, typeof volume);
   return { ...unsetPending(state, 'getVolume'), volume };
 }
 

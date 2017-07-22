@@ -10,13 +10,13 @@ export default class Config extends Component {
     startup: boolean,
     configApplyForm: () => void,
     configSetFormField: (field: string, value: string | boolean) => void,
-    configToggleFormField: (field: string) => void,
+    configToggleFormField: (field: string) => void
   };
 
-  onSubmit($e: SyntheticInputEvent) {
+  handleSubmit = ($e: SyntheticInputEvent) => {
     $e.preventDefault();
     this.props.configApplyForm();
-  }
+  };
 
   handleIpChange = ($e: SyntheticInputEvent) => {
     this.props.configSetFormField('ip', $e.target.value);
@@ -31,7 +31,7 @@ export default class Config extends Component {
 
     return (
       <div className="window-content window-content--flex-inner">
-        <form className={styles.form} onSubmit={$e => this.onSubmit($e)}>
+        <form className={styles.form} onSubmit={this.handleSubmit}>
           <div>
             <div className="form-group">
               <label htmlFor="ip">Ip-Address</label>
@@ -45,14 +45,15 @@ export default class Config extends Component {
                   name="startup"
                   checked={startup}
                   onChange={this.handleStartupChange}
-                />
-                {' '}
+                />{' '}
                 Run at startup
               </label>
             </div>
           </div>
           <div className={styles.button}>
-            <button className="btn btn-positive" type="submit">Save</button>
+            <button className="btn btn-positive" type="submit">
+              Save
+            </button>
           </div>
         </form>
       </div>

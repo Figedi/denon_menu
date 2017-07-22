@@ -1,4 +1,4 @@
-import { call, select, take, fork, put, cancel, cancelled, actionChannel } from 'redux-saga/effects';
+import { call, select, take, fork, put, cancel, cancelled, actionChannel, all } from 'redux-saga/effects';
 import { buffers, delay } from 'redux-saga';
 import { REHYDRATE } from 'redux-persist/constants';
 import { get } from 'lodash';
@@ -115,5 +115,5 @@ function* watchRehydrate() {
 }
 
 export default function* root() {
-  yield [fork(watchStart), fork(watchRehydrate)];
+  yield all([call(watchStart), call(watchRehydrate)]);
 }

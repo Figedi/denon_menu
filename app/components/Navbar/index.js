@@ -4,7 +4,7 @@ import { Toolbar } from 'react-photonkit';
 
 export default class Navbar extends Component {
   props: {
-    to: string,
+    to: string
   };
 
   render() {

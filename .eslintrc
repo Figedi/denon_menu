@@ -1,5 +1,9 @@
 {
   "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
+  },
   "extends": "airbnb",
   "env": {
     "browser": true,
@@ -26,6 +30,7 @@
     "react/sort-comp": [2, {
       "order": ["type-annotations", "static-methods", "lifecycle", "everything-else", "render"]
     }],
+    "no-console": [1, { allow: ["info", "warn", "error"] }]
   },
   "plugins": [
     "flowtype",

@@ -6,7 +6,7 @@ export default class Slider extends Component {
     min: number,
     max: number,
     step: number,
-    onChange: ($event: SyntheticEvent) => void,
+    onChange: ($event: SyntheticEvent) => void
   };
 
   componentWillMount() {

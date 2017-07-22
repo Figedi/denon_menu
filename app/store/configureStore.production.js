@@ -10,14 +10,12 @@ import localForage from 'localforage';
 import rootReducer from '../reducers';
 import rootSaga from '../sagas';
 
-import type { RootReducer } from '../reducers';
-
 const router = routerMiddleware(hashHistory);
 const sagaMiddleware = createSagaMiddleware();
 const enhancer = compose(applyMiddleware(sagaMiddleware, thunk, router), autoRehydrate());
 
-export default function configureStore(initialState: RootReducer) {
-  const store = createStore(rootReducer, initialState, enhancer); // eslint-disable-line flowtype-errors/show-errors
+export default function configureStore() {
+  const store = createStore(rootReducer, null, enhancer); // eslint-disable-line flowtype-errors/show-errors
 
   sagaMiddleware.run(rootSaga);
 

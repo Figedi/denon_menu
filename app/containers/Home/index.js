@@ -3,24 +3,47 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import Modal from 'react-modal';
 import Slider from 'rc-slider';
+import { connect } from 'react-redux';
 
+import Layout from '../Layout';
+import * as mapDispatchToProps from '../../actions/denon';
+import type { RootState } from '../../reducers';
 import styles from './Home.css';
 
-export default class Home extends Component {
-  props: {
-    $pending: Array<string>,
-    $error: ?Error,
-    volume: number,
-    host: string,
-    channel: string,
-    power: string,
-    denonStartInterval: () => void,
-    denonStopInterval: () => void,
-    denonSetVolume: (host: string, amount: number) => void,
-    denonCommitVolume: (amount: number) => void,
-    denonSetPower: (host: string, state: string) => void,
-    denonSetChannel: (host: string, channel: string) => void
+type DispatchProps = {
+  denonStartInterval: () => void,
+  denonStopInterval: () => void,
+  denonSetVolume: (host: string, amount: number) => void,
+  denonCommitVolume: (amount: number) => void,
+  denonSetPower: (host: string, state: string) => void,
+  denonSetChannel: (host: string, channel: string) => void
+};
+
+type StateProps = {
+  $pending: Array<string>,
+  $error: ?Error,
+  volume: number,
+  host: string,
+  channel: string,
+  power: string
+};
+
+type Props = DispatchProps & StateProps;
+
+function mapStateToProps(state: RootState): StateProps {
+  const { volume, power, channel, $pending, $error } = state.denon;
+  const host = state.config.ip;
+  return {
+    host,
+    volume,
+    power,
+    channel,
+    $pending,
+    $error,
   };
+}
+class Home extends Component {
+  props: Props;
 
   componentDidMount() {
     this.props.denonStartInterval();
@@ -93,35 +116,39 @@ export default class Home extends Component {
         'btn-default': type.indexOf(channel) < 0,
       });
     return (
-      <div className="window-content window-content--flex-inner">
-        <Modal
-          isOpen={power !== 'ON'}
-          contentLabel="Power off :("
-          className={styles.modal}
-          overlayClassName={styles.overlay}
-        >
-          {this.renderModalContent()}
-        </Modal>
-        <div className={styles.slider}>
-          <Slider
-            onChange={this.handleVolumeChange}
-            onAfterChange={this.handleVolumeAfterChange}
-            value={+volume}
-            min={0}
-            max={75}
-            step={0.5}
-            pushable={false}
-          />
+      <Layout buttonLink="/config">
+        <div className="window-content window-content--flex-inner">
+          <Modal
+            isOpen={power !== 'ON'}
+            contentLabel="Power off :("
+            className={styles.modal}
+            overlayClassName={styles.overlay}
+          >
+            {this.renderModalContent()}
+          </Modal>
+          <div className={styles.slider}>
+            <Slider
+              onChange={this.handleVolumeChange}
+              onAfterChange={this.handleVolumeAfterChange}
+              value={+volume}
+              min={0}
+              max={75}
+              step={0.5}
+              pushable={false}
+            />
+          </div>
+          <div className={['btn-group', styles.buttons].join(' ')}>
+            <button className={buttonClasses('SAT/CBL')} onClick={this.handlePCClick}>
+              PC
+            </button>
+            <button className={buttonClasses('TV')} onClick={this.handleTVClick}>
+              TV
+            </button>
+          </div>
         </div>
-        <div className={['btn-group', styles.buttons].join(' ')}>
-          <button className={buttonClasses('SAT/CBL')} onClick={this.handlePCClick}>
-            PC
-          </button>
-          <button className={buttonClasses('TV')} onClick={this.handleTVClick}>
-            TV
-          </button>
-        </div>
-      </div>
+      </Layout>
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -1,4 +1,4 @@
-import { call, select, take, fork, put } from 'redux-saga/effects';
+import { call, select, take, put, all } from 'redux-saga/effects';
 import { REHYDRATE } from 'redux-persist/constants';
 
 import { CONFIG_ACTIONS, configSetFormField } from '../actions/config';
@@ -25,5 +25,5 @@ function* watchRehydrate() {
 }
 
 export default function* root() {
-  yield [fork(watchConfigChange), fork(watchRehydrate)];
+  yield all([call(watchConfigChange), call(watchRehydrate)]);
 }
