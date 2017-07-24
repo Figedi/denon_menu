@@ -31,7 +31,7 @@ function exec(host: string, cmd: string) {
     getInstance(host).push(cmd, clientResponse => {
       const { error, ...rest } = clientResponse;
       if (error) {
-        reject(error);
+        reject(new Error(error));
       } else {
         resolve(rest);
       }
